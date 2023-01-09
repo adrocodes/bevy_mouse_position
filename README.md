@@ -4,10 +4,11 @@ This plugin simple wraps the [Cookbook](https://bevy-cheatbook.github.io/cookboo
 
 ---
 
-## Install
+## Install - cargo.toml
 
-```
-cargo install --git https://github.com/adrocodes/bevy_mouse_position
+```toml
+[dependencies]
+bevy_mouse_position = { git = "https://github.com/adrocodes/bevy_mouse_position" }
 ```
 
 ## Usage
