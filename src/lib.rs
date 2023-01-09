@@ -13,9 +13,9 @@ pub struct CursorPositionScreen(pub Vec2);
 
 #[derive(Default, Debug, Resource)]
 pub struct MousePosition {
-    pub world: WorldPosition,
-    pub cursor_ui: CursorPositionUi,
-    pub cursor_screen: CursorPositionScreen,
+    pub world: Vec2,
+    pub cursor_ui: Vec2,
+    pub cursor_screen: Vec2,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, SystemLabel)]
@@ -81,8 +81,8 @@ fn track_mouse_position(
         res_ui_position.0 = ui_pos.abs();
         res_screen_position.0 = screen_pos;
 
-        res_mouse_position.world = *res_world_position;
-        res_mouse_position.cursor_ui = *res_ui_position;
-        res_mouse_position.cursor_screen = *res_screen_position;
+        res_mouse_position.world = res_world_position.0;
+        res_mouse_position.cursor_ui = res_ui_position.0;
+        res_mouse_position.cursor_screen = res_screen_position.0;
     }
 }
