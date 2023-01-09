@@ -2,6 +2,8 @@
 
 This plugin simple wraps the [Cookbook](https://bevy-cheatbook.github.io/cookbook/cursor2world.html) example to do the same thing. You can easily just copy and paste that example to your project if you wanted to.
 
+Something to keep in mind, `x:0, y:0` will be the center of your window.
+
 ---
 
 ## Install - cargo.toml
