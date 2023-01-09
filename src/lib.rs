@@ -2,11 +2,21 @@ use bevy::{prelude::*, render::camera::RenderTarget};
 
 pub struct MousePositionPlugin;
 
-#[derive(Default, Debug, Resource)]
-pub struct MousePosition(pub Vec2);
+#[derive(Default, Debug, Resource, Copy, Clone)]
+pub struct WorldPosition(pub Vec2);
+
+#[derive(Default, Debug, Resource, Clone, Copy)]
+pub struct CursorPositionUi(pub Vec2);
+
+#[derive(Default, Debug, Resource, Clone, Copy)]
+pub struct CursorPositionScreen(pub Vec2);
 
 #[derive(Default, Debug, Resource)]
-pub struct UiMousePosition(pub Vec2);
+pub struct MousePosition {
+    world: WorldPosition,
+    cursor_ui: CursorPositionUi,
+    cursor_screen: CursorPositionScreen,
+}
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, SystemLabel)]
 pub enum MousePositionSystems {
@@ -15,25 +25,37 @@ pub enum MousePositionSystems {
 
 impl Plugin for MousePositionPlugin {
     fn build(&self, app: &mut App) {
-        app.insert_resource(MousePosition::default())
-            .insert_resource(UiMousePosition::default())
+        app.insert_resource(WorldPosition::default())
+            .insert_resource(CursorPositionUi::default())
+            .insert_resource(CursorPositionScreen::default())
+            .insert_resource(MousePosition::default())
             .add_system(track_mouse_position.label(MousePositionSystems::Track));
     }
 }
 
-pub fn debug_mouse_position(position: Res<MousePosition>) {
-    println!("x: {}, y: {}", position.0.x, position.0.y);
+pub fn debug_world_position(position: Res<WorldPosition>) {
+    println!("WORLD - ({}, {})", position.0.x, position.0.y);
 }
 
-pub fn debug_ui_mouse_position(position: Res<UiMousePosition>) {
-    println!("x: {}, y: {}", position.0.x, position.0.y);
+pub fn debug_cursor_ui_position(position: Res<CursorPositionUi>) {
+    println!("CURSOR UI - ({}, {})", position.0.x, position.0.y);
+}
+
+pub fn debug_cursor_screen_position(position: Res<CursorPositionScreen>) {
+    println!("CURSOR SCREEN - ({}, {})", position.0.x, position.0.y);
+}
+
+pub fn debug_mouse_position(position: Res<MousePosition>) {
+    println!("MOUSE POSITION - {:?}", position);
 }
 
 fn track_mouse_position(
     windows: Res<Windows>,
     query: Query<(&Camera, &GlobalTransform)>,
-    mut position: ResMut<MousePosition>,
-    mut ui_position: ResMut<UiMousePosition>,
+    mut res_world_position: ResMut<WorldPosition>,
+    mut res_ui_position: ResMut<CursorPositionUi>,
+    mut res_screen_position: ResMut<CursorPositionScreen>,
+    mut res_mouse_position: ResMut<MousePosition>,
 ) {
     let (camera, camera_transform) = query.single();
 
@@ -55,7 +77,12 @@ fn track_mouse_position(
         let world_pos: Vec2 = world_pos.truncate();
         let ui_pos = screen_pos - Vec2::new(0., window_size.y);
 
-        position.0 = world_pos;
-        ui_position.0 = ui_pos.abs();
+        res_world_position.0 = world_pos;
+        res_ui_position.0 = ui_pos.abs();
+        res_screen_position.0 = screen_pos;
+
+        res_mouse_position.world = *res_world_position;
+        res_mouse_position.cursor_ui = *res_ui_position;
+        res_mouse_position.cursor_screen = *res_screen_position;
     }
 }
