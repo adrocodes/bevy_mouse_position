@@ -9,7 +9,7 @@ pub struct MousePosition(pub Vec2);
 pub struct UiMousePosition(pub Vec2);
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, SystemLabel)]
-enum MousePositionSystems {
+pub enum MousePositionSystems {
     Track,
 }
 
