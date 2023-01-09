@@ -13,9 +13,9 @@ pub struct CursorPositionScreen(pub Vec2);
 
 #[derive(Default, Debug, Resource)]
 pub struct MousePosition {
-    world: WorldPosition,
-    cursor_ui: CursorPositionUi,
-    cursor_screen: CursorPositionScreen,
+    pub world: WorldPosition,
+    pub cursor_ui: CursorPositionUi,
+    pub cursor_screen: CursorPositionScreen,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, SystemLabel)]
