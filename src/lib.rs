@@ -48,9 +48,9 @@ fn track_mouse_position(
         let world_pos = ndc_to_world.project_point3(ndc.extend(-1.0));
 
         let world_pos: Vec2 = world_pos.truncate();
-        let ui_pos = screen_pos - Vec2::new(0., window_size.y).abs();
+        let ui_pos = screen_pos - Vec2::new(0., window_size.y);
 
         position.0 = world_pos;
-        ui_position.0 = ui_pos;
+        ui_position.0 = ui_pos.abs();
     }
 }
