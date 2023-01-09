@@ -20,6 +20,10 @@ pub fn debug_mouse_position(position: Res<MousePosition>) {
     println!("x: {}, y: {}", position.0.x, position.0.y);
 }
 
+pub fn debug_ui_mouse_position(position: Res<UiMousePosition>) {
+    println!("x: {}, y: {}", position.0.x, position.0.y);
+}
+
 fn track_mouse_position(
     windows: Res<Windows>,
     query: Query<(&Camera, &GlobalTransform)>,
