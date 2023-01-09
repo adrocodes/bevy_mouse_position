@@ -8,11 +8,13 @@ pub struct MousePosition(pub Vec2);
 #[derive(Default, Debug, Resource)]
 pub struct UiMousePosition(pub Vec2);
 
+pub const MOUSE_POSITION_TRACKING_LABEL: &str = "track_mouse_position";
+
 impl Plugin for MousePositionPlugin {
     fn build(&self, app: &mut App) {
         app.insert_resource(MousePosition::default())
             .insert_resource(UiMousePosition::default())
-            .add_system(track_mouse_position);
+            .add_system(track_mouse_position.label(MOUSE_POSITION_TRACKING_LABEL));
     }
 }
 
