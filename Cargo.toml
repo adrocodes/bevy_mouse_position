@@ -2,9 +2,12 @@
 name = "bevy_mouse_position"
 version = "0.1.0"
 edition = "2021"
+authors = ["adrocodes adrocodes@users.noreply.github.com"]
+description = "Bevy Plugin to keep track of your 2D mouse position"
+readme = "README.md"
+repository = "https://github.com/adrocodes/bevy_mouse_position"
+keywords = ["bevy", "gamedev", "plugin", "2d", "mouse-position"]
+categories = ["games", "game-development", "plugin"]
 
 [dependencies]
-bevy = { version = "0.9.1", default-features = false }
-
-[dev-dependencies]
-bevy = { version = "0.9.1", default-features = true }
+bevy = "0.9"
