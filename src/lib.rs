@@ -5,9 +5,13 @@ pub struct MousePositionPlugin;
 #[derive(Default, Debug, Resource)]
 pub struct MousePosition(pub Vec2);
 
+#[derive(Default, Debug, Resource)]
+pub struct UiMousePosition(pub Vec2);
+
 impl Plugin for MousePositionPlugin {
     fn build(&self, app: &mut App) {
         app.insert_resource(MousePosition::default())
+            .insert_resource(UiMousePosition::default())
             .add_system(track_mouse_position);
     }
 }
@@ -20,6 +24,7 @@ fn track_mouse_position(
     windows: Res<Windows>,
     query: Query<(&Camera, &GlobalTransform)>,
     mut position: ResMut<MousePosition>,
+    mut ui_position: ResMut<UiMousePosition>,
 ) {
     let (camera, camera_transform) = query.single();
 
@@ -39,7 +44,9 @@ fn track_mouse_position(
         let world_pos = ndc_to_world.project_point3(ndc.extend(-1.0));
 
         let world_pos: Vec2 = world_pos.truncate();
+        let ui_pos = screen_pos - Vec2::new(0., window_size.y).abs();
 
         position.0 = world_pos;
+        ui_position.0 = ui_pos;
     }
 }
