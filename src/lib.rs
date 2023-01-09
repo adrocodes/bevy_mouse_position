@@ -13,7 +13,7 @@ impl Plugin for MousePositionPlugin {
 }
 
 pub fn debug_mouse_position(position: Res<MousePosition>) {
-    debug!("x: {}, y: {}", position.0.x, position.0.y);
+    println!("x: {}, y: {}", position.0.x, position.0.y);
 }
 
 fn track_mouse_position(
