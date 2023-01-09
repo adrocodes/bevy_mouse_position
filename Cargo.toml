@@ -1,0 +1,10 @@
+[package]
+name = "bevy_mouse_position"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+bevy = { version = "0.9.1", default-features = false }
+
+[dev-dependencies]
+bevy = { version = "0.9.1", default-features = true }
